@@ -15,69 +15,226 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 自定义CSS样式
+# 现代化CSS样式
 st.markdown("""
 <style>
-    .main-header {
-        font-size: 3rem;
-        font-weight: bold;
+    /* 主题色彩 */
+    :root {
+        --primary-color: #6366f1;
+        --secondary-color: #8b5cf6;
+        --accent-color: #06b6d4;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --dark-bg: #1e293b;
+        --light-bg: #f8fafc;
+    }
+    
+    /* 隐藏默认元素 */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* 主标题样式 */
+    .main-title {
+        font-size: 2.5rem;
+        font-weight: 700;
         text-align: center;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 2rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
+    /* 现代化指标卡片 */
     .metric-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        color: white;
-        text-align: center;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
         margin: 0.5rem 0;
     }
     
-    .track-header {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #667eea;
-        border-bottom: 2px solid #667eea;
-        padding-bottom: 0.5rem;
+    .metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .metric-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .metric-label {
+        font-size: 0.875rem;
+        color: #64748b;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    /* 侧边栏样式 */
+    .css-1d391kg {
+        background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+    }
+    
+    .css-1d391kg .css-1avcm0n {
+        color: white;
+    }
+    
+    /* 选择框样式 */
+    .stSelectbox > div > div {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+    
+    .stSelectbox > div > div:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    
+    /* 表格样式 */
+    .dataframe {
+        border: none !important;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dataframe th {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+        color: white !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        padding: 12px !important;
+    }
+    
+    .dataframe td {
+        padding: 10px !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+    }
+    
+    /* 分段控制器样式 */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background: #f1f5f9;
+        border-radius: 12px;
+        padding: 4px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        height: 48px;
+        padding: 0 24px;
+        background: transparent;
+        border-radius: 8px;
+        color: #64748b;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background: white;
+        color: var(--primary-color);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    /* 图表容器 */
+    .chart-container {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         margin: 1rem 0;
     }
     
-    .stDataFrame {
-        border: 1px solid #e1e5e9;
-        border-radius: 5px;
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        .main-title {
+            font-size: 2rem;
+        }
+        
+        .metric-card {
+            padding: 1rem;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+        }
+    }
+    
+    /* 加载动画 */
+    .stSpinner > div {
+        border-color: var(--primary-color) transparent transparent transparent;
+    }
+    
+    /* 成功/警告色彩 */
+    .success { color: var(--success-color); }
+    .warning { color: var(--warning-color); }
+    .danger { color: var(--danger-color); }
+    
+    /* 渐变背景 */
+    .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 16px;
+        margin: 1rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
 
 @st.cache_data
-def load_summary_data():
-    """加载总表数据"""
-    return pd.read_excel('toolify_processed_2025_summary.xlsx')
+def load_data():
+    """加载和预处理数据"""
+    try:
+        # 读取主数据文件
+        df = pd.read_excel('toolify_processed_2025_summary.xlsx')
+        
+        # 确保数据类型正确
+        month_columns = ['2025年1月访问量', '2025年2月访问量', '2025年3月访问量', 
+                        '2025年4月访问量', '2025年5月访问量', '2025年6月访问量']
+        
+        for col in month_columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
+        
+        # 计算MoM增长率
+        df = calculate_mom_growth(df)
+        
+        return df
+    except Exception as e:
+        st.error(f"数据加载失败: {str(e)}")
+        return pd.DataFrame()
 
-@st.cache_data
-def load_track_data():
-    """加载各赛道数据"""
-    track_files = {}
-    data_dir = Path('data/2025H1')
+def calculate_mom_growth(df):
+    """计算月度环比增长率"""
+    month_columns = ['2025年1月访问量', '2025年2月访问量', '2025年3月访问量', 
+                    '2025年4月访问量', '2025年5月访问量', '2025年6月访问量']
     
-    for file_path in data_dir.glob('2025H1*.xlsx'):
-        track_name = file_path.stem.replace('2025H1', '')
-        try:
-            df = pd.read_excel(file_path)
-            track_files[track_name] = df
-        except Exception as e:
-            st.warning(f"无法读取文件 {file_path}: {e}")
+    # 计算每月的MoM增长率
+    for i in range(1, len(month_columns)):
+        current_month = month_columns[i]
+        previous_month = month_columns[i-1]
+        
+        # 计算增长率，避免除零错误
+        growth_rate = ((df[current_month] - df[previous_month]) / 
+                      (df[previous_month] + 1)) * 100  # +1避免除零
+        
+        month_name = current_month.replace('访问量', 'MoM%')
+        df[month_name] = growth_rate.round(1)
     
-    return track_files
+    return df
 
-def format_number(num):
-    """格式化数字显示"""
+def format_large_number(num):
+    """格式化大数字显示"""
     if pd.isna(num):
-        return "N/A"
+        return "0"
     if num >= 1e9:
         return f"{num/1e9:.1f}B"
     elif num >= 1e6:
@@ -85,268 +242,358 @@ def format_number(num):
     elif num >= 1e3:
         return f"{num/1e3:.1f}K"
     else:
-        return f"{num:,.0f}"
+        return f"{num:.0f}"
 
-def create_overview_metrics(df):
-    """创建概览指标"""
+def create_mom_heatmap(df):
+    """创建MoM增长率热力图"""
+    # 准备热力图数据
+    mom_columns = [col for col in df.columns if 'MoM%' in col]
+    
+    if not mom_columns:
+        return None
+    
+    # 按赛道聚合数据
+    track_mom = df.groupby('赛道分类')[mom_columns].mean().round(1)
+    
+    # 创建热力图
+    fig = go.Figure(data=go.Heatmap(
+        z=track_mom.values,
+        x=[col.replace('2025年', '').replace('MoM%', '') for col in mom_columns],
+        y=track_mom.index,
+        colorscale='RdYlGn',
+        zmid=0,
+        text=track_mom.values,
+        texttemplate="%{text}%",
+        textfont={"size": 10},
+        hoverongaps=False,
+        hovertemplate='<b>%{y}</b><br>%{x}: %{z}%<extra></extra>'
+    ))
+    
+    fig.update_layout(
+        title={
+            'text': '各赛道月度环比增长率热力图 (MoM%)',
+            'x': 0.5,
+            'font': {'size': 20, 'family': 'Arial Black'}
+        },
+        xaxis_title="月份",
+        yaxis_title="AI赛道",
+        height=600,
+        font=dict(size=12),
+        plot_bgcolor='white',
+        paper_bgcolor='white'
+    )
+    
+    return fig
+
+def create_track_overview_table(df):
+    """创建赛道概览表格"""
+    # 按赛道聚合数据
+    track_summary = df.groupby('赛道分类').agg({
+        'Tools名称': 'count',
+        '2025年6月访问量': 'sum',
+        '半年访问增量': 'sum',
+        '2025H1访问量增速': lambda x: pd.to_numeric(x.str.replace('%', '').str.replace('N/A', '0'), errors='coerce').mean()
+    }).round(2)
+    
+    track_summary.columns = ['工具数量', '6月总访问量', '半年总增量', '平均增速(%)']
+    
+    # 按6月访问量排序
+    track_summary = track_summary.sort_values('6月总访问量', ascending=False)
+    
+    # 格式化数字
+    track_summary['6月总访问量'] = track_summary['6月总访问量'].apply(format_large_number)
+    track_summary['半年总增量'] = track_summary['半年总增量'].apply(format_large_number)
+    track_summary['平均增速(%)'] = track_summary['平均增速(%)'].apply(lambda x: f"{x:.1f}%" if not pd.isna(x) else "N/A")
+    
+    return track_summary
+
+def create_growth_distribution_chart(df):
+    """创建增长率分布图表"""
+    # 处理增速数据
+    growth_data = df['2025H1访问量增速'].str.replace('%', '').str.replace('N/A', '0')
+    growth_numeric = pd.to_numeric(growth_data, errors='coerce').fillna(0)
+    
+    # 分段显示分布
+    fig = make_subplots(
+        rows=2, cols=2,
+        subplot_titles=('整体分布', '正增长分布 (0-100%)', '高增长分布 (100%+)', '负增长分布'),
+        specs=[[{"type": "histogram"}, {"type": "histogram"}],
+               [{"type": "histogram"}, {"type": "histogram"}]]
+    )
+    
+    # 整体分布
+    fig.add_trace(
+        go.Histogram(x=growth_numeric, nbinsx=50, name="整体", 
+                    marker_color='rgba(99, 102, 241, 0.7)'),
+        row=1, col=1
+    )
+    
+    # 正增长分布 (0-100%)
+    positive_growth = growth_numeric[(growth_numeric >= 0) & (growth_numeric <= 100)]
+    fig.add_trace(
+        go.Histogram(x=positive_growth, nbinsx=20, name="正增长 (0-100%)",
+                    marker_color='rgba(16, 185, 129, 0.7)'),
+        row=1, col=2
+    )
+    
+    # 高增长分布 (100%+)
+    high_growth = growth_numeric[growth_numeric > 100]
+    fig.add_trace(
+        go.Histogram(x=high_growth, nbinsx=20, name="高增长 (100%+)",
+                    marker_color='rgba(245, 158, 11, 0.7)'),
+        row=2, col=1
+    )
+    
+    # 负增长分布
+    negative_growth = growth_numeric[growth_numeric < 0]
+    fig.add_trace(
+        go.Histogram(x=negative_growth, nbinsx=20, name="负增长",
+                    marker_color='rgba(239, 68, 68, 0.7)'),
+        row=2, col=2
+    )
+    
+    fig.update_layout(
+        title={
+            'text': '2025H1访问量增速分布分析',
+            'x': 0.5,
+            'font': {'size': 20}
+        },
+        height=600,
+        showlegend=False
+    )
+    
+    return fig
+
+def create_track_detail_page(df, track_name):
+    """创建赛道详情页面"""
+    track_data = df[df['赛道分类'] == track_name].copy()
+    
+    if track_data.empty:
+        st.warning(f"未找到 {track_name} 的数据")
+        return
+    
+    # 赛道概览指标
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.markdown("""
+        st.markdown(f"""
         <div class="metric-card">
-            <h3>📊 总工具数</h3>
-            <h2>{:,}</h2>
+            <div class="metric-value">{len(track_data)}</div>
+            <div class="metric-label">工具总数</div>
         </div>
-        """.format(len(df)), unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     
     with col2:
-        total_visits_june = df['2025年6月访问量'].sum()
-        st.markdown("""
+        total_visits = track_data['2025年6月访问量'].sum()
+        st.markdown(f"""
         <div class="metric-card">
-            <h3>🚀 6月总访问量</h3>
-            <h2>{}</h2>
+            <div class="metric-value">{format_large_number(total_visits)}</div>
+            <div class="metric-label">6月总访问量</div>
         </div>
-        """.format(format_number(total_visits_june)), unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     
     with col3:
-        total_growth = df['半年访问增量'].sum()
-        st.markdown("""
+        total_growth = track_data['半年访问增量'].sum()
+        st.markdown(f"""
         <div class="metric-card">
-            <h3>📈 半年总增量</h3>
-            <h2>{}</h2>
+            <div class="metric-value">{format_large_number(total_growth)}</div>
+            <div class="metric-label">半年总增量</div>
         </div>
-        """.format(format_number(total_growth)), unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     
     with col4:
-        track_count = df['赛道分类'].nunique()
-        st.markdown("""
+        avg_growth = track_data['2025H1访问量增速'].str.replace('%', '').str.replace('N/A', '0')
+        avg_growth_num = pd.to_numeric(avg_growth, errors='coerce').mean()
+        st.markdown(f"""
         <div class="metric-card">
-            <h3>🎯 赛道数量</h3>
-            <h2>{}</h2>
+            <div class="metric-value">{avg_growth_num:.1f}%</div>
+            <div class="metric-label">平均增速</div>
         </div>
-        """.format(track_count), unsafe_allow_html=True)
-
-def create_track_distribution_chart(df):
-    """创建赛道分布图表"""
-    track_counts = df['赛道分类'].value_counts()
+        """, unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
+    # TOP 10工具排行
+    st.markdown(f"### 🏆 {track_name} TOP 10 工具")
     
-    with col1:
-        # 饼图
-        fig_pie = px.pie(
-            values=track_counts.values, 
-            names=track_counts.index,
-            title="🎯 AI工具赛道分布",
-            color_discrete_sequence=px.colors.qualitative.Set3
+    # 按6月访问量排序
+    top_tools = track_data.nlargest(10, '2025年6月访问量')[
+        ['Tools名称', '2025年6月访问量', '半年访问增量', '2025H1访问量增速']
+    ].copy()
+    
+    # 重置索引并添加排名
+    top_tools.reset_index(drop=True, inplace=True)
+    top_tools.index = top_tools.index + 1
+    
+    # 使用color-coding显示表格
+    def highlight_growth(val):
+        if isinstance(val, str) and '%' in val:
+            try:
+                num = float(val.replace('%', ''))
+                if num > 50:
+                    return 'background-color: #dcfce7; color: #166534'
+                elif num > 0:
+                    return 'background-color: #fef3c7; color: #92400e'
+                else:
+                    return 'background-color: #fee2e2; color: #991b1b'
+            except:
+                return ''
+        return ''
+    
+    styled_table = top_tools.style.applymap(highlight_growth, subset=['2025H1访问量增速'])
+    st.dataframe(styled_table, use_container_width=True)
+    
+    # 月度趋势图
+    st.markdown(f"### 📈 {track_name} 月度访问量趋势")
+    
+    month_columns = ['2025年1月访问量', '2025年2月访问量', '2025年3月访问量', 
+                    '2025年4月访问量', '2025年5月访问量', '2025年6月访问量']
+    
+    # 选择显示前5名工具的趋势
+    top_5_tools = track_data.nlargest(5, '2025年6月访问量')
+    
+    fig = go.Figure()
+    
+    for idx, (_, tool) in enumerate(top_5_tools.iterrows()):
+        visits = [tool[col] for col in month_columns]
+        months = ['1月', '2月', '3月', '4月', '5月', '6月']
+        
+        fig.add_trace(go.Scatter(
+            x=months,
+            y=visits,
+            mode='lines+markers',
+            name=tool['Tools名称'][:20] + ('...' if len(tool['Tools名称']) > 20 else ''),
+            line=dict(width=3),
+            marker=dict(size=8)
+        ))
+    
+    fig.update_layout(
+        title=f"{track_name} TOP 5 工具月度访问量趋势",
+        xaxis_title="月份",
+        yaxis_title="访问量",
+        height=500,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
         )
-        fig_pie.update_layout(height=500)
-        st.plotly_chart(fig_pie, use_container_width=True)
-    
-    with col2:
-        # 条形图
-        fig_bar = px.bar(
-            x=track_counts.values,
-            y=track_counts.index,
-            orientation='h',
-            title="📊 各赛道工具数量排行",
-            color=track_counts.values,
-            color_continuous_scale="viridis"
-        )
-        fig_bar.update_layout(height=500, yaxis={'categoryorder':'total ascending'})
-        st.plotly_chart(fig_bar, use_container_width=True)
-
-def create_growth_analysis(df):
-    """创建增长分析图表"""
-    # 获取有效增长率数据
-    df_growth = df[df['2025H1访问量增速'] != 'N/A'].copy()
-    df_growth['增长率'] = df_growth['2025H1访问量增速'].str.rstrip('%').astype(float)
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        # 增长率分布直方图
-        fig_hist = px.histogram(
-            df_growth, 
-            x='增长率',
-            title="📈 工具增长率分布",
-            nbins=50,
-            color_discrete_sequence=['#667eea']
-        )
-        fig_hist.update_layout(height=400)
-        st.plotly_chart(fig_hist, use_container_width=True)
-    
-    with col2:
-        # 各赛道平均增长率
-        track_growth = df_growth.groupby('赛道分类')['增长率'].mean().sort_values(ascending=True)
-        fig_track_growth = px.bar(
-            x=track_growth.values,
-            y=track_growth.index,
-            orientation='h',
-            title="🚀 各赛道平均增长率",
-            color=track_growth.values,
-            color_continuous_scale="Reds"
-        )
-        fig_track_growth.update_layout(height=400, yaxis={'categoryorder':'total ascending'})
-        st.plotly_chart(fig_track_growth, use_container_width=True)
-
-def create_top_tools_analysis(df):
-    """创建顶级工具分析"""
-    st.markdown('<div class="track-header">🏆 顶级工具分析</div>', unsafe_allow_html=True)
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("📊 访问量TOP 10")
-        top_visits = df.nlargest(10, '2025年6月访问量')[['Tools名称', '2025年6月访问量', '赛道分类']]
-        top_visits['2025年6月访问量'] = top_visits['2025年6月访问量'].apply(format_number)
-        st.dataframe(top_visits, use_container_width=True, hide_index=True)
-    
-    with col2:
-        st.subheader("🚀 增长量TOP 10")
-        top_growth = df.nlargest(10, '半年访问增量')[['Tools名称', '半年访问增量', '2025H1访问量增速', '赛道分类']]
-        top_growth['半年访问增量'] = top_growth['半年访问增量'].apply(format_number)
-        st.dataframe(top_growth, use_container_width=True, hide_index=True)
-
-def display_track_details(track_files):
-    """显示赛道详细信息"""
-    st.markdown('<div class="track-header">🎯 赛道详细分析</div>', unsafe_allow_html=True)
-    
-    # 选择赛道
-    selected_track = st.selectbox(
-        "选择要查看的赛道：",
-        options=list(track_files.keys()),
-        key="track_selector"
     )
     
-    if selected_track and selected_track in track_files:
-        df_track = track_files[selected_track]
-        
-        # 赛道概览
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            st.metric("工具数量", len(df_track) - 1)  # 减去总和行
-        
-        with col2:
-            if len(df_track) > 1:
-                total_visits = df_track.iloc[0]['2025年6月访问量']
-                st.metric("6月总访问量", format_number(total_visits))
-        
-        with col3:
-            if len(df_track) > 1:
-                total_growth = df_track.iloc[0]['半年访问增量']
-                st.metric("半年总增量", format_number(total_growth))
-        
-        # 显示表格
-        st.subheader(f"📋 {selected_track} 详细数据")
-        
-        # 格式化数据显示
-        df_display = df_track.copy()
-        for col in ['2025年6月访问量', '2025年5月访问量', '2025年4月访问量', 
-                   '2025年3月访问量', '2025年2月访问量', '2025年1月访问量', '半年访问增量']:
-            if col in df_display.columns:
-                df_display[col] = df_display[col].apply(lambda x: format_number(x) if pd.notna(x) else 'N/A')
-        
-        st.dataframe(df_display, use_container_width=True, hide_index=True)
-        
-        # 赛道内工具对比图表
-        if len(df_track) > 2:  # 除了总和行，至少有2个工具
-            track_tools = df_track.iloc[1:].copy()  # 排除总和行
-            
-            if len(track_tools) > 0:
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    # 访问量对比
-                    fig_visits = px.bar(
-                        track_tools.head(10),
-                        x='Tools名称',
-                        y='2025年6月访问量',
-                        title=f"{selected_track} - 工具访问量对比",
-                        color='2025年6月访问量',
-                        color_continuous_scale="Blues"
-                    )
-                    fig_visits.update_xaxes(tickangle=45)
-                    st.plotly_chart(fig_visits, use_container_width=True)
-                
-                with col2:
-                    # 增长率对比（如果有增长率数据）
-                    if '2025H1访问量增速' in track_tools.columns:
-                        valid_growth = track_tools[track_tools['2025H1访问量增速'] != 'N/A'].copy()
-                        if len(valid_growth) > 0:
-                            valid_growth['增长率'] = valid_growth['2025H1访问量增速'].str.rstrip('%').astype(float)
-                            fig_growth = px.bar(
-                                valid_growth.head(10),
-                                x='Tools名称',
-                                y='增长率',
-                                title=f"{selected_track} - 工具增长率对比",
-                                color='增长率',
-                                color_continuous_scale="Reds"
-                            )
-                            fig_growth.update_xaxes(tickangle=45)
-                            st.plotly_chart(fig_growth, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # 增长率分析
+    st.markdown(f"### 📊 {track_name} 增长率分析")
+    
+    growth_data = track_data['2025H1访问量增速'].str.replace('%', '').str.replace('N/A', '0')
+    growth_numeric = pd.to_numeric(growth_data, errors='coerce').fillna(0)
+    
+    fig = px.histogram(
+        x=growth_numeric,
+        nbins=20,
+        title=f"{track_name} 增长率分布",
+        labels={'x': '增长率 (%)', 'y': '工具数量'},
+        color_discrete_sequence=['#6366f1']
+    )
+    
+    fig.update_layout(height=400)
+    st.plotly_chart(fig, use_container_width=True)
 
 def main():
     """主函数"""
-    # 标题
-    st.markdown('<div class="main-header">🤖 Toolify AI工具数据分析仪表板</div>', unsafe_allow_html=True)
+    # 页面标题
+    st.markdown('<h1 class="main-title">🤖 Toolify AI工具数据分析仪表板</h1>', unsafe_allow_html=True)
     
     # 加载数据
-    try:
-        df_summary = load_summary_data()
-        track_files = load_track_data()
+    df = load_data()
+    
+    if df.empty:
+        st.error("无法加载数据，请检查数据文件")
+        return
+    
+    # 侧边栏导航
+    st.sidebar.markdown("## 📊 导航菜单")
+    
+    # 定义重点赛道
+    key_tracks = ["AI Chatbot", "AI虚拟陪伴", "AI编程", "AI音频", "AI视频"]
+    other_tracks = [track for track in df['赛道分类'].unique() 
+                   if track not in key_tracks and track != "其他"]
+    
+    page_options = ["总览"] + key_tracks + ["其他赛道"]
+    selected_page = st.sidebar.selectbox("选择页面", page_options)
+    
+    if selected_page == "总览":
+        # 总览页面
+        st.markdown("## 📈 数据总览")
         
-        # 侧边栏
-        st.sidebar.title("📊 导航菜单")
-        view_option = st.sidebar.selectbox(
-            "选择视图：",
-            ["🏠 总览", "📈 数据分析", "🎯 赛道详情", "📋 原始数据"]
-        )
+        # 核心指标
+        col1, col2, col3, col4 = st.columns(4)
         
-        if view_option == "🏠 总览":
-            st.markdown("### 📊 数据概览")
-            create_overview_metrics(df_summary)
-            
-            st.markdown("---")
-            create_track_distribution_chart(df_summary)
-            
-        elif view_option == "📈 数据分析":
-            st.markdown("### 📈 深度数据分析")
-            create_growth_analysis(df_summary)
-            
-            st.markdown("---")
-            create_top_tools_analysis(df_summary)
-            
-        elif view_option == "🎯 赛道详情":
-            display_track_details(track_files)
-            
-        elif view_option == "📋 原始数据":
-            st.markdown("### 📋 原始数据查看")
-            st.subheader("🗂️ 总表数据")
-            st.dataframe(df_summary, use_container_width=True)
-            
-            st.markdown("---")
-            st.subheader("📁 数据下载")
-            st.download_button(
-                label="📥 下载总表数据 (Excel)",
-                data=open('toolify_processed_2025_summary.xlsx', 'rb').read(),
-                file_name='toolify_processed_2025_summary.xlsx',
-                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            )
+        with col1:
+            total_tools = len(df)
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{total_tools:,}</div>
+                <div class="metric-label">AI工具总数</div>
+            </div>
+            """, unsafe_allow_html=True)
         
-        # 页脚
-        st.markdown("---")
-        st.markdown("""
-        <div style="text-align: center; color: #666; padding: 20px;">
-            📊 Toolify AI工具数据分析仪表板 | 数据更新时间: 2025年1月-6月 | 
-            💡 总工具数: {:,} | 🎯 覆盖赛道: {} 个
-        </div>
-        """.format(len(df_summary), df_summary['赛道分类'].nunique()), unsafe_allow_html=True)
+        with col2:
+            total_visits = df['2025年6月访问量'].sum()
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{format_large_number(total_visits)}</div>
+                <div class="metric-label">6月总访问量</div>
+            </div>
+            """, unsafe_allow_html=True)
         
-    except Exception as e:
-        st.error(f"数据加载失败: {e}")
-        st.info("请确保数据文件存在于正确的路径中。")
+        with col3:
+            total_growth = df['半年访问增量'].sum()
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{format_large_number(total_growth)}</div>
+                <div class="metric-label">半年总增量</div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col4:
+            avg_growth = df['2025H1访问量增速'].str.replace('%', '').str.replace('N/A', '0')
+            avg_growth_num = pd.to_numeric(avg_growth, errors='coerce').mean()
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{avg_growth_num:.1f}%</div>
+                <div class="metric-label">平均增速</div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # 赛道概览表
+        st.markdown("## 🎯 赛道概览")
+        track_overview = create_track_overview_table(df)
+        st.dataframe(track_overview, use_container_width=True)
+        
+        # MoM热力图
+        st.markdown("## 🌡️ 月度环比增长率分析")
+        mom_heatmap = create_mom_heatmap(df)
+        if mom_heatmap:
+            st.plotly_chart(mom_heatmap, use_container_width=True)
+        
+        # 增长率分布
+        st.markdown("## 📊 增长率分布分析")
+        growth_chart = create_growth_distribution_chart(df)
+        st.plotly_chart(growth_chart, use_container_width=True)
+        
+    elif selected_page in key_tracks:
+        # 重点赛道详情页
+        st.markdown(f"## 🎯 {selected_page} 详细分析")
+        create_track_detail_page(df, selected_page)
+        
+    elif selected_page == "其他赛道":
+        # 其他赛道页面
+        st.markdown("## 🔍 其他赛道")
+        
+        selected_other_track = st.selectbox("选择要查看的赛道", other_tracks)
+        
+        if selected_other_track:
+            create_track_detail_page(df, selected_other_track)
 
 if __name__ == "__main__":
     main()
