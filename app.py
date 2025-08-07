@@ -147,6 +147,12 @@ st.markdown("""
     .dataframe td {
         padding: 10px !important;
         border-bottom: 1px solid #f1f5f9 !important;
+        text-align: center !important;
+    }
+    
+    /* 特殊处理工具名称列 - 左对齐 */
+    .dataframe td:first-child {
+        text-align: left !important;
     }
     
     /* 图表容器 */
